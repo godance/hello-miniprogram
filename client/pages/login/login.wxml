@@ -1,0 +1,14 @@
+<view class='container'>
+  <block wx:if="{{logged==null}}">
+    <text>页面初始化</text>
+  </block>
+   <block wx:elif="{{logged}}">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+    <text>{{userInfo.nickName}}</text>
+  </block>
+  <block wx:else>
+    <image class="userinfo-avatar" src="../../resource/img/df-avatar.png"></image>
+    <button open-type="getUserInfo" bind:getuserinfo="getUserInfo">登录</button>
+  </block> 
+
+</view>

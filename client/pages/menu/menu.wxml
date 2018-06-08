@@ -1,0 +1,58 @@
+<view class='container'>
+  <view class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <view>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+  </view>
+
+
+  <block wx:if="{{mode=='select'}}">
+    <view wx:for="{{menulist}}" wx:key="*this" class="menulist">
+      <text>{{item}}</text>
+      <button data-name="{{item}}" class="menulist-button"  bind:tap="doShare" >gank</button>
+      <button data-mode="edit" data-name="{{item}}" class="menulist-button" bind:tap="changeMode">修改</button>
+      <button data-name="{{item}}" class="menulist-button" bind:tap="delMenu">删除</button>
+    </view>
+    <button data-mode="new" bind:tap="changeMode">新建</button>
+
+
+  </block>
+
+  <block wx:elif="{{mode=='share'}}">
+
+    <button open-type='share' >发起</button>
+
+
+  </block>
+
+
+
+  <block wx:else>
+
+    <scroll-view scroll-y style="height: 300px;">
+      <view wx:for="{{menulist}}" wx:key="id" class="menulist">
+        <input type="text" data-id="{{item.id}}" data-key="name" value="{{item.name}}" bindblur="menuInput" placeholder="菜名"></input>
+        <input type="number" data-id="{{item.id}}" data-key="price" value="{{item.price}}" bindblur="menuInput" placeholder="价格"></input>
+        <button wx:if="{{item.id>0}}" data-id="{{item.id}}" class="menulist-button" bind:tap="subMenu">-</button>
+        <button class="menulist-button" bind:tap="addMenu">+</button>
+
+      </view>
+    </scroll-view>
+
+    <form bindsubmit="menuSubmit" bindreset="menuReset">
+      <view>
+        <input wx:if="{{mode=='new'}}" name="menuname" class="inputbox" type="text" placeholder="菜单名" />
+        <input wx:else name="menuname" class="inputbox" type="text" value="{{menuname}}" placeholder="菜单名" />
+      </view>
+
+      <view class="menulist">
+        <button formType="submit">Submit</button>
+        <button formType="reset">Reset</button>
+        <button wx:if="{{mode=='edit'}}" data-mode="select" bind:tap="changeMode">返回</button>
+      </view>
+    </form>
+
+  </block>
+
+</view>
